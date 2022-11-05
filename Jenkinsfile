@@ -22,11 +22,11 @@ pipeline {
             }
          }
 
-        stage('MVN SONARQUBE') {
-           steps {
+          stage('MVN SONARQUBE') {
+            steps {
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Ghada3728'
             }
-         }
+        }
 
         //stage ('NEXUS DEPLOY') {
          //   steps {
