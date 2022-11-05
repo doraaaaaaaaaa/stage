@@ -9,11 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.esprit.examen.entities.DetailFournisseur;
 import com.esprit.examen.entities.Fournisseur;
-import com.esprit.examen.entities.SecteurActivite;
 import com.esprit.examen.repositories.DetailFournisseurRepository;
 import com.esprit.examen.repositories.FournisseurRepository;
-import com.esprit.examen.repositories.ProduitRepository;
-import com.esprit.examen.repositories.SecteurActiviteRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -24,10 +21,10 @@ public class FournisseurServiceImpl implements IFournisseurService {
 	FournisseurRepository fournisseurRepository;
 	@Autowired
 	DetailFournisseurRepository detailFournisseurRepository;
-	@Autowired
-	ProduitRepository produitRepository;
-	@Autowired
-	SecteurActiviteRepository secteurActiviteRepository;
+//	@Autowired
+//	ProduitRepository produitRepository;
+//	@Autowired
+//	SecteurActiviteRepository secteurActiviteRepository;
 
 	@Override
 	public List<Fournisseur> retrieveAllFournisseurs() {
@@ -77,8 +74,8 @@ public class FournisseurServiceImpl implements IFournisseurService {
 	@Override
 	public void assignSecteurActiviteToFournisseur(Long idSecteurActivite, Long idFournisseur) {
 		Fournisseur fournisseur = fournisseurRepository.findById(idFournisseur).orElse(null);
-		SecteurActivite secteurActivite = secteurActiviteRepository.findById(idSecteurActivite).orElse(null);
-        fournisseur.getSecteurActivites().add(secteurActivite);
+//		SecteurActivite secteurActivite = secteurActiviteRepository.findById(idSecteurActivite).orElse(null);
+//        fournisseur.getSecteurActivites().add(secteurActivite);
         fournisseurRepository.save(fournisseur);
 		
 		

@@ -3,12 +3,11 @@ pipeline {
   
    stages{
         stage('GIT') { 
-           steps { 
-               git branch: 'ghada', credentialsId: '98b95d8d-772b-4b8b-8718-3cab8a09a4ec', url: 'https://github.com/HssanMahdi/backfordevops.git'
+            steps { 
+               echo'git' 
                 
             }
          }
-         
         stage('MVN CLEAN') { 
             steps { 
                sh' mvn clean install -DskipTests' 
