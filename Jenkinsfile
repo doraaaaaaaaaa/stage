@@ -22,16 +22,18 @@ pipeline {
             }
          }
 
-          stage('MVN SONARQUBE') {
+          /*stage('MVN SONARQUBE') {
             steps {
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Ghada3728'
             }
-        }
+        }*/
 
-        //stage ('NEXUS DEPLOY') {
-         //   steps {
-          //      sh 'mvn deploy -DskipTests'
-         //   }
-        //}
+        stage ('NEXUS DEPLOY') {
+            steps {
+				script {
+					nexusPublisher nexusInstanceId: 'Nexus', nexusRepositoryId: 'TpAchat', packages: [[$class: 'MavenPackage', mavenAssetList: [], mavenCoordinate: [artifactId: 'tpAchatProject', groupId: 'com.esprit.examen', packaging: 'jar', version: '1.0']]]
+				}
+            }
+        }
    }
 }
