@@ -58,7 +58,7 @@ pipeline {
 		*/
 		stage('Build docker image'){
             steps{
-             sh 'docker build -t ghadahajjaji/finalachat:latest .'
+             sh 'docker build -t ghadahajjaji/finalachat .'
             }
         }
 		
@@ -70,7 +70,7 @@ pipeline {
         
          stage('Push Image to Docker Hub') {         
             steps{                            
-             sh 'docker push ghadahajjaji/finalachat:latest'             
+             sh 'docker push ghadahajjaji/finalachat'             
             }            
         }
 		
