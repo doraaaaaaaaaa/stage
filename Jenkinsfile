@@ -1,5 +1,4 @@
 pipeline { 
-   agent any
    environment { 
 
         registry = "ghadahajjaji/finalachat" 
@@ -9,7 +8,8 @@ pipeline {
         dockerImage = '' 
 
     }
-  
+	agent any
+	
    stages{
         stage('GIT') { 
            steps { 
