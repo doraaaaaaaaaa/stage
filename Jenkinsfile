@@ -2,7 +2,7 @@ pipeline {
    agent any
    environment { 
 
-        registry = "ghadahj/tpachat" 
+        registry = "ghadahj/tpachatfinal" 
 
         registryCredential = 'dockerHub' 
 
