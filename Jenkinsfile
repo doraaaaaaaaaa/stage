@@ -61,7 +61,7 @@ pipeline {
              sh 'docker build -t ghadahajjaji/finalachat:latest .'
             }
         }
-		/*
+		
         stage('Dockerhub Login') {
              steps {
              sh 'docker login -u "ghadahajjaji" -p "Ghada3728"'
@@ -80,14 +80,14 @@ pipeline {
             }
 
         }
-        */
+        /*
 		stage("Docker-Compose") { 
              steps { 
                  script { 
                     sh "docker-compose up -d  "
                  } 
              }
-		}
+		}*/
 
 		stage('Email notification') {
             steps {
