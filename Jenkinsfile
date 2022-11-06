@@ -45,21 +45,21 @@ pipeline {
            }
         }*/
 		
-		stage('Build Docker'){
-            steps{
-                sh 'docker build -t ghadahj/tpachat .'
-            }
+		stage('Building our image') {
+         steps {
+			script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+               }
+            } 
         }
-		stage('Docker Login'){
-            steps{
-
-                sh 'docker login -u ghadahj -p Ghada3728'
-            }
-        }
-		stage('Docker Push'){
-            steps{
-
-                sh 'docker push ghadahj/tpachat'
+		
+        stage('Deploy our image') {
+         steps {
+			script {
+				docker.withRegistry('', registryCredential ) {
+				dockerImage.push()
+				   }
+				}
             }
         }
 		
