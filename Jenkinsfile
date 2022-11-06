@@ -61,7 +61,7 @@ pipeline {
              sh 'docker build -t ghadahajjaji/finalachat:latest .'
             }
         }
-		/*
+		
         stage('Dockerhub Login') {
              steps {
              sh 'docker login -u "ghadahajjaji" -p "Ghada3728"'
@@ -73,14 +73,14 @@ pipeline {
              sh 'docker push ghadahajjaji/finalachat:latest'             
             }            
         }
-		
+		/*
         stage('Cleaning up') { 
             steps { 
                 sh "docker rmi $registry:$BUILD_NUMBER" 
             }
 
         }
-        */
+        
 		stage("Docker-Compose") { 
              steps { 
                  script { 
@@ -94,5 +94,6 @@ pipeline {
                 mail bcc: '', body: 'All containers are up', cc: '', from: '', replyTo: '', subject: 'Jenkins-Dockerhub Alert', to: 'ghada.hajjaji@esprit.tn'
             }
         }
+		*/
    }
 }
