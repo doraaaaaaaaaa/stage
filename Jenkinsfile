@@ -30,7 +30,7 @@ pipeline {
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Ghada3728'
             }
         }
-		*/
+		
 		stage("Unit tests") {
 			steps {
 				sh 'mvn test'
@@ -41,6 +41,7 @@ pipeline {
 				}
 			}
 		}
+		*/
 		stage('clean et packaging'){
 			steps {
 				sh 'mvn clean package -DskipTests'

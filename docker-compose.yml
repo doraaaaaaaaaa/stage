@@ -43,6 +43,12 @@ services:
     networks:
      - projectdevops
   
+  angular-service:
+       container_name: ng-docker-example
+       build: C:\Users\ghada\Desktop\crud-tuto-front
+       ports:
+           - "4200:80"
+           
 volumes:
   nexus-data:
   sonarqube_logs:
