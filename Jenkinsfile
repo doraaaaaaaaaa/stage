@@ -43,7 +43,7 @@ pipeline {
 					nexusPublisher nexusInstanceId: 'Nexus', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'target/tpAchatProject-1.0.jar']], mavenCoordinate: [artifactId: 'tpAchatProject', groupId: 'com.esprit.examen', packaging: 'jar', version: '1.0']]]
 		 		}
            }
-        }*/
+        }
 		
 		stage('Building our image') {
          steps {
@@ -68,13 +68,7 @@ pipeline {
                 sh "docker rmi $registry:$BUILD_NUMBER" 
             }
 
-        }
-		
-		stage('Email notification') {
-            steps {
-                mail bcc: '', body: 'Image is pushed to Dockerhub', cc: '', from: '', replyTo: '', subject: 'Jenkins-Dockerhub Alert', to: 'ghada.hajjaji@esprit.tn'
-            }
-        }
+        }*/
         
 		stage("Docker-Compose") { 
              steps { 
@@ -82,6 +76,12 @@ pipeline {
                     sh "docker-compose up -d  "
                  } 
              }
-		}	 
+		}
+
+		stage('Email notification') {
+            steps {
+                mail bcc: '', body: 'All containers are up', cc: '', from: '', replyTo: '', subject: 'Jenkins-Dockerhub Alert', to: 'ghada.hajjaji@esprit.tn'
+            }
+        }
    }
 }
