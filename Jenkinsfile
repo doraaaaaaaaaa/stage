@@ -25,32 +25,32 @@ pipeline {
             }
          }
 
-        /*stage('MVN SONARQUBE') {
+        stage('MVN SONARQUBE') {
             steps {
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Ghada3728'
             }
-        }*/
+        }
 		
 		stage('clean et packaging'){
 			steps {
 				sh 'mvn clean package -DskipTests'
 			}
 		}
-		/*
+		
         stage ('NEXUS DEPLOY') {
            steps {
 				script {
 					nexusPublisher nexusInstanceId: 'Nexus', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'target/tpAchatProject-1.0.jar']], mavenCoordinate: [artifactId: 'tpAchatProject', groupId: 'com.esprit.examen', packaging: 'jar', version: '1.0']]]
 		 		}
            }
-        }*/
+        }
 		
 		stage('Build docker image'){
             steps{
              sh 'docker build -t ghadahajjaji/finalachat:latest .'
             }
         }
-
+		
         stage('Dockerhub Login') {
              steps {
              sh 'docker login -u "ghadahajjaji" -p "Ghada3728"'
@@ -69,7 +69,7 @@ pipeline {
             }
 
         }
-        /*
+        
 		stage("Docker-Compose") { 
              steps { 
                  script { 
@@ -82,6 +82,6 @@ pipeline {
             steps {
                 mail bcc: '', body: 'All containers are up', cc: '', from: '', replyTo: '', subject: 'Jenkins-Dockerhub Alert', to: 'ghada.hajjaji@esprit.tn'
             }
-        }*/
+        }
    }
 }
