@@ -2,7 +2,7 @@ pipeline {
    agent any
    environment { 
 
-        registry = "ghadahj/tpachatfinal" 
+        registry = "ghadahj/finalachat" 
 
         registryCredential = 'dockerHub' 
 
@@ -47,16 +47,18 @@ pipeline {
 		
 		stage('Building our image') {
          steps {
-				sh 'docker build -t tpachat . '
+				script {
+					dockerImage = docker.build registry + ":$BUILD_NUMBER"
+					}
             } 
         }
 		
         stage('Deploy our image') {
          steps {
 			script {
-				sh 'docker login -u "ghadahj" -p "Ghada3728" docker.io'
-                sh 'docker tag tpachat:latest ghadahj/tpachat:latest'
-                sh ' docker push ghadahj/tpachat:latest'
+				docker.withRegistry('', registryCredential ) {
+				dockerImage.push()
+				   }
 				}
             }
         }
