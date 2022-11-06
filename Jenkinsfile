@@ -1,4 +1,5 @@
 pipeline { 
+   agent any
    environment { 
 
         registry = "ghadahj/tpachat" 
@@ -8,7 +9,6 @@ pipeline {
         dockerImage = '' 
 
     }
-     agent any
   
    stages{
         stage('GIT') { 
