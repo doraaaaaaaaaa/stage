@@ -24,19 +24,29 @@ pipeline {
                 
             }
          }
-
+		/*
         stage('MVN SONARQUBE') {
             steps {
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Ghada3728'
             }
         }
-		
+		*/
+		stage("Unit tests") {
+			steps {
+				sh 'mvn test'
+			}
+			post {
+				always {
+					junit 'target/surefire-reports/*.xml'
+				}
+			}
+		}
 		stage('clean et packaging'){
 			steps {
 				sh 'mvn clean package -DskipTests'
 			}
 		}
-		
+		/*
         stage ('NEXUS DEPLOY') {
            steps {
 				script {
@@ -44,7 +54,7 @@ pipeline {
 		 		}
            }
         }
-		
+		*/
 		stage('Build docker image'){
             steps{
              sh 'docker build -t ghadahajjaji/finalachat:latest .'
