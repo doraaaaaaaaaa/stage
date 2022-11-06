@@ -1,8 +1,8 @@
 version: '3'
 services:
   angular-service:
-       container_name: ng-docker-example
-       build: ./crud-tuto-front
+       container_name: angular
+       build: crud-tuto-front
        ports:
            - "4200:4200"
   
