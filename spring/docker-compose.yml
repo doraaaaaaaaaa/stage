@@ -1,5 +1,11 @@
 version: '3'
 services:
+  angular-service:
+       container_name: ng-docker-example
+       build: ./crud-tuto-front
+       ports:
+           - "4200:4200"
+  
   database:
     image: mysql
     container_name: mysql
@@ -43,11 +49,6 @@ services:
     networks:
      - projectdevops
   
-  angular-service:
-       container_name: ng-docker-example
-       build: C:\Users\ghada\Desktop\crud-tuto-front
-       ports:
-           - "4200:80"
            
 volumes:
   nexus-data:
