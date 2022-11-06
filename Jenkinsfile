@@ -47,18 +47,16 @@ pipeline {
 		
 		stage('Building our image') {
          steps {
-			script {
-                dockerImage = docker.build registry + ":$BUILD_NUMBER"
-               }
+				sh 'docker build -t tpachat . '
             } 
         }
 		
         stage('Deploy our image') {
          steps {
 			script {
-				docker.withRegistry('', registryCredential ) {
-				dockerImage.push()
-				   }
+				sh 'docker login -u "ghadahj" -p "Ghada3728" docker.io'
+                sh 'docker tag tpachat:latest ghadahj/tpachat:latest'
+                sh ' docker push ghadahj/tpachat:latest'
 				}
             }
         }
