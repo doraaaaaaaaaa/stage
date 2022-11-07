@@ -1,9 +1,6 @@
 package com.esprit.examen.entities;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,9 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -47,12 +41,6 @@ public class Fournisseur implements Serializable {
 	private String libelle;
 	@Enumerated(EnumType.STRING)
 	private CategorieFournisseur  categorieFournisseur;
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy="fournisseur")
-//	@JsonIgnore
-//	private Set<Facture> factures;
-//    @ManyToMany(fetch=FetchType.EAGER)
-//    @JsonIgnore
-//    private Set<SecteurActivite> secteurActivites;
     @OneToOne(cascade= CascadeType.ALL,fetch=FetchType.EAGER)
     private DetailFournisseur detailFournisseur;
     
