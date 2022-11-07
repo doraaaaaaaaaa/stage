@@ -29,11 +29,6 @@ pipeline {
 			steps {
 				sh 'mvn test -DskipTests'
 			}
-			post {
-				always {
-					junit 'target/surefire-reports/*.xml'
-				}
-			}
 		}
 		
         stage('MVN SONARQUBE') {
