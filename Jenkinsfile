@@ -24,16 +24,10 @@ pipeline {
                 
             }
          }
-		/*
-        stage('MVN SONARQUBE') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Ghada3728'
-            }
-        }
-		
-		stage("Unit tests") {
+		 
+		stage("Unit / Mockito tests") {
 			steps {
-				sh 'mvn test'
+				sh 'mvn test -DskipTests'
 			}
 			post {
 				always {
@@ -41,13 +35,19 @@ pipeline {
 				}
 			}
 		}
-		*/
+		
+        stage('MVN SONARQUBE') {
+            steps {
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Ghada3728'
+            }
+        }
+		
 		stage('clean et packaging'){
 			steps {
 				sh 'mvn clean package -DskipTests'
 			}
 		}
-		/*
+		
         stage ('NEXUS DEPLOY') {
            steps {
 				script {
@@ -55,7 +55,7 @@ pipeline {
 		 		}
            }
         }
-		*/
+		
 		stage('Build docker image'){
             steps{
              sh 'docker build -t ghadahajjaji/finalachat .'
@@ -74,26 +74,19 @@ pipeline {
             }            
         }
 		
-        stage('Cleaning up') { 
-            steps { 
-                sh "docker rmi $registry:$BUILD_NUMBER" 
+		stage('Email notification') {
+            steps {
+                mail bcc: '', body: 'All containers are up', cc: '', from: '', replyTo: '', subject: 'Jenkins-Dockerhub Alert', to: 'ghada.hajjaji@esprit.tn'
             }
-
         }
-        /*
+		
 		stage("Docker-Compose") { 
              steps { 
                  script { 
                     sh "docker-compose up -d  "
                  } 
              }
-		}*/
-
-		stage('Email notification') {
-            steps {
-                mail bcc: '', body: 'All containers are up', cc: '', from: '', replyTo: '', subject: 'Jenkins-Dockerhub Alert', to: 'ghada.hajjaji@esprit.tn'
-            }
-        }
+		}
 		
    }
 }
