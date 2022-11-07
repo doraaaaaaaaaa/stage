@@ -73,7 +73,7 @@ pipeline {
             steps {
                 mail bcc: '', body: 'All containers are up', cc: '', from: '', replyTo: '', subject: 'Jenkins-Dockerhub Alert', to: 'ghada.hajjaji@esprit.tn'
             }
-        }*/
+        }
 		
 		stage("Docker-Compose") { 
              steps { 
@@ -82,6 +82,6 @@ pipeline {
                  } 
              }
 		}
-		
+		*/
    }
 }
