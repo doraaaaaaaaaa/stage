@@ -17,7 +17,7 @@ pipeline {
         
         stage('git clone') {
             steps {
-               git branch: 'main', url: 'https://github.com/iheeb9/devops_pipline'
+               git branch: 'main', url: 'https://github.com/iheeb9/test'
         
             }
         }
