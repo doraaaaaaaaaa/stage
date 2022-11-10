@@ -1,87 +1,90 @@
-pipeline { 
-   environment { 
-
-        registry = "ghadahajjaji/finalachat" 
-
-        registryCredential = 'dockerHub' 
-
-        dockerImage = '' 
-
-    }
-	agent any
-	
-   stages{
-        stage('GIT') { 
-           steps { 
-               git branch: 'ghada', credentialsId: '98b95d8d-772b-4b8b-8718-3cab8a09a4ec', url: 'https://github.com/HssanMahdi/backfordevops.git'
-                
-            }
-         }
-		 
-        stage('MVN COMPILE') { 
-            steps { 
-               sh' mvn compile' 
-                
-            }
-         }
-		 
-		stage("Unit / Mockito tests") {
-			steps {
-				sh 'mvn test -DskipTests'
-			}
-		}
-		
-        stage('MVN SONARQUBE') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=Ghada3728 '
-            }
-        }
-		
-		stage('clean et packaging'){
-			steps {
-				sh 'mvn clean package -DskipTests'
-			}
-		}
-		
-        stage ('NEXUS DEPLOY') {
-           steps {
-				script {
-					nexusPublisher nexusInstanceId: 'Nexus', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: 'target/tpAchatProject-1.0.jar']], mavenCoordinate: [artifactId: 'tpAchatProject', groupId: 'com.esprit.examen', packaging: 'jar', version: '1.0']]]
-		 		}
-           }
-        }
-		
-		stage('Build docker image'){
-            steps{
-             sh 'docker build -t ghadahajjaji/finalachat .'
-            }
-        }
-		
-        stage('Dockerhub Login') {
-             steps {
-             sh 'docker login -u "ghadahajjaji" -p "Ghada3728"'
-            }
-         }
+properties([pipelineTriggers([githubPush()])])
+pipeline {
+    agent any 
+        tools { 
+        maven "MyMaven"
         
-         stage('Push Image to Docker Hub') {         
-            steps{                            
-             sh 'docker push ghadahajjaji/finalachat'             
-            }            
-        }
-		
-		stage('Email notification') {
+    }
+
+      environment {
+        DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+    }
+       
+       
+
+    stages {
+
+        
+        stage('git clone') {
             steps {
-                mail bcc: '', body: 'All containers are up', cc: '', from: '', replyTo: '', subject: 'Jenkins-Dockerhub Alert', to: 'ghada.hajjaji@esprit.tn'
+               git branch: 'main', url: 'https://github.com/iheeb9/devops_pipline'
+        
             }
         }
-		
-		stage("Docker-Compose") { 
-             steps { 
-                 script { 
-                    sh "docker-compose up -d  "
-                 } 
-             }
-		}
-		
-   }
+        stage('clean package') {
+            steps {
+             sh 'mvn clean install -DskipTests=true'
+        
+        
+            }
+        }
+        stage('mvn test') {
+            steps {
+             sh 'mvn test'
+        
+        
+            }
+        }
+         stage('sonarqube') {
+            steps {
+            withSonarQubeEnv( 'sonarqube:8.9.7-community') {
+                 sh 'mvn sonar:sonar'
+   
+                }
+        
+        
+            }
+        }
+        stage('Nexus') {
+            steps {
+                script{
+          nexusPublisher nexusInstanceId: 'nexus3',
+                                          nexusRepositoryId: 'Maven-',
+                                          packages: [[$class: 'MavenPackage', 
+                                          mavenAssetList: [[classifier: '', extension: '', filePath: 'target/tpAchatProject-1.0.jar']], 
+                                          mavenCoordinate: [artifactId: 'tpAchatProject', groupId: 'com.esprit.examen', packaging: 'jar', version: '1.0']]]      
+                }
+            }
+        } 
+           stage('build-image') {
+            steps {
+                 sh 'ansible-playbook ansible-playbook.yml '
+   
+            }
+        }
+        
+         stage('push docker hub') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+                // sh 'docker push iheeb9/test'
+   
+            }
+        }
+           stage(' docker-compose') {
+            steps {
+                sh 'docker-compose -f docker-compose-app.yml up '
+   
+            }
+        }
+               
+        
+    
+        
+        
+        
+    }
+    
+    
+        
+        
 }
