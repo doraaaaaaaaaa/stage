@@ -38,6 +38,7 @@ pipeline {
          stage('sonarqube') {
             steps {
             withSonarQubeEnv( 'sonarqube:8.9.7-community') {
+                 sh 'mvn verify'
                  sh 'mvn sonar:sonar'
    
                 }
