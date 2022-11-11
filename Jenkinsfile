@@ -4,7 +4,7 @@ pipeline {
         tools { 
         maven "MyMaven"
         
-    }
+    }   
 
       environment {
         DOCKERHUB_CREDENTIALS=credentials('dockerhub')
