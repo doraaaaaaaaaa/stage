@@ -91,13 +91,13 @@ public class FournisseurServiceImplMock {
 	public void testUpdateFournisseur() {
 		Fournisseur f = new Fournisseur("CodeFournisseur","LibelleFournisseur");
 		DetailFournisseur df = new DetailFournisseur("matricule","addresse");
-		System.out.println("++++++++++++++++++++++++"+f);
+		System.out.println("new Fournisseur"+f);
 		Mockito.when(FournisseurRepository.save(any(Fournisseur.class))).thenReturn(f);	
 		Mockito.when(DetailFournisseurRepository.save(any(DetailFournisseur.class))).thenReturn(df);	
 		f.setLibelle("LibelleUpdated");
 		f.setCode("CodeUpdated");
 		f.setDetailFournisseur(df);
-		System.out.println("++++++++++++++++++++++++"+f);
+		System.out.println("DetailFournisseurRepository.save"+f);
 		Fournisseur fUpdated = fournisseurService.updateFournisseur(f);
 		assertNotNull(fUpdated);
 		assertEquals(f.getLibelle(),fUpdated.getLibelle());
