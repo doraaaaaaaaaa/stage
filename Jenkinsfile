@@ -17,7 +17,7 @@ pipeline {
         
         stage('git clone') {
             steps {
-               git branch: 'main', url: 'https://github.com/iheeb9/test'
+               git branch: 'main', url: 'https://github.com/iheeb9/TpAchat'
         
             }
         }
