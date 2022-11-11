@@ -85,7 +85,13 @@ pipeline {
         
     }
     
-    
+   post{
+        always{
+        
+        emailext body: 'jenkins', subject: 'jenkins', to: 'iheb.youssef@esprit.tn'
+        }
+        
+    }     
         
         
 }
