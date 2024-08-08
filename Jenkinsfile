@@ -17,7 +17,7 @@ pipeline {
         
         stage('git clone') {
             steps {
-               git branch: 'main', url: 'https://github.com/iheeb9/TpAchat'
+               git branch: 'main', url: 'https://github.com/doraaaaaaaaaa/stage'
         
             }
         }
@@ -88,7 +88,7 @@ pipeline {
    post{
         always{
         
-        emailext body: 'jenkins', subject: 'jenkins', to: 'iheb.youssef@esprit.tn'
+        emailext body: 'jenkins', subject: 'jenkins', to: 'dorra.benarbi@esprit.tn'
         }
         
     }     
