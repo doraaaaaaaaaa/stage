@@ -2,7 +2,7 @@ properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any 
         tools { 
-        maven "MyMaven"
+        maven "M2_HOME"
         
     }   
 
